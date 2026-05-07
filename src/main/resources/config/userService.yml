@@ -1,0 +1,28 @@
+spring:
+  mongodb:
+    database: ${USER_SERVICE_DB}
+    uri: ${USER_SERVICE_DB_URI}
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: ${RMQ_USER}
+    password: ${RMQ_PASSWORD}
+    listener:
+      simple:
+        missing-queues-fatal: false
+  cloud:
+    stream:
+      bindings:
+        springCloudBusInput:
+          destination: springCloudBus
+          group: ecom-config-server-group
+server:
+  port: 8082
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+app:
+  message: "Hello"

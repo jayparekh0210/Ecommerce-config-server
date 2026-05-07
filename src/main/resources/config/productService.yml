@@ -1,0 +1,42 @@
+spring:
+  datasource:
+    url: ${PRODUCT_SERVICE_DB_URL}
+    username: ${PRODUCT_SERVICE_DB_USERNAME}
+    password: ${PRODUCT_SERVICE_DB_PASSWORD}
+  jpa:
+    show-sql: true
+    database: PostgreSQL
+    database-platform: org.hibernate.dialect.PostgreSQLDialect
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        format_sql: true
+        jdbc:
+          time_zone: Asia/Kolkata
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: ${RMQ_USER}
+    password: ${RMQ_PASSWORD}
+    listener:
+      simple:
+        missing-queues-fatal: false
+  cloud:
+    stream:
+      bindings:
+        springCloudBusInput:
+          destination: springCloudBus
+          group: ecom-config-server-group
+server:
+  port: 8081
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
+
+
+app:
+  message: "Hello"

@@ -1,0 +1,32 @@
+spring:
+  application:
+    name: Ecom-Config-Server
+  profiles:
+    active: native
+  rabbitmq:
+    host: localhost
+    port: 5672
+    username: ${RMQ_USER}
+    password: ${RMQ_PASSWORD}
+    listener:
+      simple:
+        missing-queues-fatal: false
+  cloud:
+    stream:
+      bindings:
+        springCloudBusInput:
+          destination: springCloudBus
+          group: ecom-config-server-group
+    config:
+      server:
+        native:
+          search-locations: file:///${CONFIG_FILE_PATH}
+server:
+  port: 8085
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+
