@@ -27,7 +27,7 @@ spring:
       bindings:
         springCloudBusInput:
           destination: springCloudBus
-          group: ecom-config-server-group
+          group: ecom-product-service-group
 server:
   port: 8081
 management:
@@ -39,4 +39,4 @@ management:
 
 
 app:
-  message: "Hello"
+  message: "Hello product 2"

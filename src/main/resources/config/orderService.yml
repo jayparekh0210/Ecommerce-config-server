@@ -27,7 +27,7 @@ spring:
       bindings:
         springCloudBusInput:
           destination: springCloudBus
-          group: ecom-config-server-group
+          group: ecom-order-service-group
 server:
   port: 8083
 management:
@@ -36,4 +36,4 @@ management:
       exposure:
         include: "*"
 app:
-  message: "Hello order"
+  message: "Hello order service"
