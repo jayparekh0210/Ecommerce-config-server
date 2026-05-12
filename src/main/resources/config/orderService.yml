@@ -28,6 +28,14 @@ spring:
         springCloudBusInput:
           destination: springCloudBus
           group: ecom-order-service-group
+Eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI}
+    fetchRegistry: true
+    registerWithEureka: true
+  instance:
+    preferIpAddress: true
 server:
   port: 8083
 management:

@@ -18,6 +18,14 @@ spring:
           group: ecom-user-service-group
 server:
   port: 8082
+Eureka:
+  client:
+    serviceUrl:
+      defaultZone: ${EUREKA_URI}
+    fetchRegistry: true
+    registerWithEureka: true
+  instance:
+    preferIpAddress: true
 management:
   endpoints:
     web:
