@@ -27,10 +27,21 @@ Eureka:
   instance:
     preferIpAddress: true
 management:
+  tracing:
+    sampling:
+      probability: 1.0
   endpoints:
     web:
       exposure:
         include: "*"
+logging:
+  file:
+    name: logs/userService.log
+  logback:
+    rollingpolicy:
+      max-history: 30
+      max-file-size: 10MB
+
 
 app:
   message: "Hello from User Service"

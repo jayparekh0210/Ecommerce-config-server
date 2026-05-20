@@ -39,9 +39,19 @@ Eureka:
 server:
   port: 8083
 management:
+  tracing:
+    sampling:
+      probability: 1.0
   endpoints:
     web:
       exposure:
         include: "*"
 app:
   message: "Hello order service"
+logging:
+  file:
+    name: logs/orderService.log
+  logback:
+    rollingpolicy:
+      max-history: 30
+      max-file-size: 10MB
