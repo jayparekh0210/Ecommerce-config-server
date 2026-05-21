@@ -46,6 +46,12 @@ management:
     web:
       exposure:
         include: "*"
+  endpoint:
+    health:
+      show-details: always
+  health:
+    circuitbreakers:
+      enabled: true
 app:
   message: "Hello order service"
 logging:
@@ -55,3 +61,32 @@ logging:
     rollingpolicy:
       max-history: 30
       max-file-size: 10MB
+
+#Ressilence4j
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      productService:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10000
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        slidingWindowType: COUNT_BASED
+
+  retry:
+    instances:
+      productService:
+        maxAttempts: 5
+        waitDuration: 1000
+
+  ratelimiter:
+    instances:
+      rateKiller:
+        limitForPeriod: 2
+        limitRefreshPeriod: 4s
+        timeoutDuration: 0
+

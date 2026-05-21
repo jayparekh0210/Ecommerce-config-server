@@ -1,36 +1,3 @@
-spring:
-  cloud:
-    gateway:
-      server:
-        webflux:
-          routes:
-            - id: productService
-              uri: lb://PRODUCTSERVICE
-              predicates:
-                - Path=/api/product/**
-
-            - id: orderService
-              uri: lb://ORDERSERVICE
-              predicates:
-                - Path=/api/order/**,/api/cart/**
-
-            - id: userService
-              uri: lb://USERSERVICE
-              predicates:
-                - Path=/api/user/**
-
-            - id: eurekaServer
-              uri: http://localhost:8761
-              predicates:
-                - Path=/eureka/main
-              filters:
-                - SetPath=/
-
-            - id: eurekaServerStatic
-              uri: http://localhost:8761
-              predicates:
-                - Path=/eureka/**
-
 management:
   tracing:
     sampling:
@@ -39,3 +6,22 @@ management:
     web:
       exposure:
         include: "*"
+  endpoint:
+    health:
+      show-details: always
+  health:
+    circuitbreakers:
+      enabled: true
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      apiGatewayService:
+        registerHealthIndicator: true
+        slidingWindowSize: 10
+        minimumNumberOfCalls: 5
+        failureRateThreshold: 50
+        waitDurationInOpenState: 10000
+        permittedNumberOfCallsInHalfOpenState: 3
+        automaticTransitionFromOpenToHalfOpenEnabled: true
+        slidingWindowType: COUNT_BASED
