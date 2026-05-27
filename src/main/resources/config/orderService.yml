@@ -15,10 +15,12 @@ spring:
         jdbc:
           time_zone: Asia/Kolkata
   rabbitmq:
-    host: localhost
-    port: 5672
-    username: ${RMQ_USER}
-    password: ${RMQ_PASSWORD}
+    host: ${RMQ_HOST:localhost}
+    port: ${RMQ_PORT:5672}
+    username: ${RMQ_USER:guest}
+    password: ${RMQ_PASSWORD:guest}
+    virtual-host: ${RMQ_VIRTUAL_HOST:/}
+    connection-timeout: 30000
     listener:
       simple:
         missing-queues-fatal: false
@@ -28,6 +30,16 @@ spring:
         springCloudBusInput:
           destination: springCloudBus
           group: ecom-order-service-group
+
+        createOrder-out-0:
+          destination: order.exchange
+          content-type: application/json
+
+      rabbit:
+        bindings:
+          createOrder-out-0:
+            producer:
+              routing-key-expression: '''order.tracking'''
 Eureka:
   client:
     serviceUrl:
@@ -61,6 +73,14 @@ logging:
     rollingpolicy:
       max-history: 30
       max-file-size: 10MB
+
+messagingRMQ:
+  exchange:
+    name: order.exchange
+  queue:
+    name: order.queue
+  routing:
+    key: order.tracking
 
 #Ressilence4j
 

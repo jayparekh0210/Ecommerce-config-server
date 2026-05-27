@@ -3,10 +3,12 @@ spring:
     database: ${USER_SERVICE_DB}
     uri: ${USER_SERVICE_DB_URI}
   rabbitmq:
-    host: localhost
-    port: 5672
-    username: ${RMQ_USER}
-    password: ${RMQ_PASSWORD}
+    host: ${RMQ_HOST:localhost}
+    port: ${RMQ_PORT:5672}
+    username: ${RMQ_USER:guest}
+    password: ${RMQ_PASSWORD:guest}
+    virtual-host: ${RMQ_VIRTUAL_HOST:/}
+    connection-timeout: 30000
     listener:
       simple:
         missing-queues-fatal: false
